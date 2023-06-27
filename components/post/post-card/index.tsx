@@ -18,17 +18,18 @@ export default function PostCard({
   return (
     <Link
       href={`/post/${post.slug}`}
-      className={clsx('', {
-        'grid items-center grid-cols-2 gap-10': layout === 'horizontal',
+      className={clsx('@container', {
+        'grid items-center grid-cols-1 md:grid-cols-2 gap-10':
+          layout === 'horizontal',
         'space-y-10': layout === 'vertical',
       })}
     >
       {/* Image */}
       <Image
         className={clsx(
-          'rounded-md w-full max-h-[300px] object-cover object-center',
+          'rounded-md w-full max-h-[300px] h-full object-cover object-center',
           {
-            'order-last': reverse,
+            'md:order-last': reverse,
           }
         )}
         src={post.image}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 export default function CTACard() {
   return (
     <div className="relative px-6 py-10 overflow-hidden rounded-md bg-slate-100">
+      <div className="absolute inset-0 z-10 bg-gradient-to-br from-white/95 via-white/80 to-white/30" />
       <Image
         fill
         src={
@@ -17,11 +18,21 @@ export default function CTACard() {
         <h3 className="mt-3 text-4xl font-semibold">
           Explore the world with me
         </h3>
-        <p className="max-w-lg mt-2 text-lg">
+        <p className="max-w-lg mt-2 text-lg font-medium">
           Explore the world with me ! I love to travel and explore new places
           🌍. I'm travelling since 2018 and I have visited 10 countries so far
           🔥.
         </p>
+        <form className="flex items-center w-full gap-2 mt-6">
+          <input
+            type="text"
+            placeholder="Write your email"
+            className="w-full px-3 py-2 text-base rounded-md md:w-auto bg-white/90 focus:ring-2 placeholder:text-sm ring-neutral-600"
+          />
+          <button className="px-3 py-2 rounded-md whitespace-nowrap bg-neutral-900 text-neutral-200">
+            Sign up
+          </button>
+        </form>
       </div>
     </div>
   );

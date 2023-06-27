@@ -10,7 +10,7 @@ export default function PostList({
   layout = 'vertical',
 }: PostListProps) {
   return (
-    <div className="grid grid-cols-2 gap-10">
+    <div className="grid grid-cols-1 gap-10 mb-5 md:mb-10 lg:grid-flow-col md:grid-cols-2 lg:auto-cols-fr">
       {posts.map((post) => {
         return <PostCard key={post.id} post={post} layout={layout} />;
       })}

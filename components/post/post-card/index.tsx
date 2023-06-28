@@ -32,7 +32,7 @@ export default function PostCard({
             'md:order-last': reverse,
           }
         )}
-        src={post.image}
+        src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/${post.image}?key=optimised`}
         width={600}
         height={300}
         alt={post.description}

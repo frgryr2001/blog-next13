@@ -5,22 +5,59 @@ import {
   PostHero,
   SocialLink,
 } from '@/components';
-import { DUMMY_POSTS } from '@/data/DUMMY_DATA';
+import directus from '@/lib/directus';
 import { notFound } from 'next/navigation';
 export const generateStaticParams = async () => {
-  return DUMMY_POSTS.map((post) => {
-    return {
-      slug: post.slug,
-    };
-  });
+  try {
+    const posts = await directus.items('post').readByQuery({
+      filter: {
+        status: {
+          _eq: 'published',
+        },
+      },
+      fields: ['slug'],
+    });
+    const postSlugs = posts?.data?.map((p) => {
+      return {
+        slug: p.slug as string,
+      };
+    });
+    return postSlugs ?? [];
+  } catch (error) {
+    console.log(error);
+    throw new Error(" Can't get post data");
+  }
 };
 
-export default function Page({
+export default async function Page({
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  const post = DUMMY_POSTS.find((post) => post.slug === slug);
+  const getPostData = async (slug: string) => {
+    try {
+      const post = await directus.items('post').readByQuery({
+        filter: {
+          slug: {
+            _eq: slug,
+          },
+        },
+        fields: [
+          '*',
+          'author.id',
+          'author.first_name',
+          'author.last_name',
+          'category.id',
+          'category.title',
+        ],
+      });
+      return post?.data?.[0];
+    } catch (error) {
+      console.log(error);
+      throw new Error("Can't get post data");
+    }
+  };
+  const post = await getPostData(slug);
   if (!post) notFound();
   return (
     <PaddingContainer>

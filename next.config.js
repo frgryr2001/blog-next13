@@ -12,6 +12,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizeFonts: true,
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig;

@@ -1,9 +1,11 @@
 import directus from '@/lib/directus';
+import { getDictionary } from '@/lib/getDictionary';
 import { revalidateTag } from 'next/cache';
 import Image from 'next/image';
 
 /* eslint-disable react/no-unescaped-entities */
-export default async function CTACard() {
+export default async function CTACard({ locale }: { locale: string }) {
+  const dictionary = await getDictionary(locale as 'en' | 'vi');
   const formAction = async (formData: FormData) => {
     'use server';
     try {
@@ -42,12 +44,10 @@ export default async function CTACard() {
       <div className="relative z-20">
         <div className="text-lg font-medium ">#exploretheworld</div>
         <h3 className="mt-3 text-4xl font-semibold">
-          Explore the world with me
+          {dictionary.ctaCard.title}
         </h3>
         <p className="max-w-lg mt-2 text-lg font-medium">
-          Explore the world with me ! I love to travel and explore new places
-          🌍. I'm travelling since 2018 and I have visited 10 countries so far
-          🔥.
+          {dictionary.ctaCard.description}
         </p>
         <form
           className="flex items-center w-full gap-2 mt-6"
@@ -57,20 +57,20 @@ export default async function CTACard() {
           <input
             type="email"
             name="email"
-            placeholder="Write your email"
+            placeholder={dictionary.ctaCard.placeholder}
             className="w-full px-3 py-2 text-base rounded-md md:w-auto bg-white/90 focus:ring-2 placeholder:text-sm ring-neutral-600"
           />
           <button className="px-3 py-2 rounded-md whitespace-nowrap bg-neutral-900 text-neutral-200">
-            Sign up
+            {dictionary.ctaCard.button}
             {/* <Loading /> */}
           </button>
         </form>
         <div className="mt-5 text-neutral-700">
-          Join our{' '}
+          {dictionary.ctaCard.subscriberText1}{' '}
           <span className="px-2 py-1 mr-1 text-sm rounded-md bg-neutral-700 text-neutral-100">
             {subscribersCount}
           </span>
-          subscribers now!
+          {dictionary.ctaCard.subscriberText2}
         </div>
       </div>
     </div>

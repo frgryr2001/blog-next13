@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "links": {
+      "cities": "Thành phố",
+      "experiences": "Trải nghiệm"
+    }
+  },
+  "button": {
+    "readMore": "Đọc thêm"
+  },
+  "ctaCard": {
+    "title": "Khám phá thế giới cùng tôi",
+    "description": "Hãy cùng tôi khám phá thế giới! Tôi yêu du lịch và khám phá những địa điểm mới 🌍. Tôi đã đi du lịch từ năm 2023 và đã đến thăm 5 quốc gia cho đến nay 🔥.",
+    "button": "Đăng ký",
+    "placeholder": "Viết email của bạn ở đây",
+    "subscriberText1": "Tham gia",
+    "subscriberText2": "người đăng ký của chúng tôi ngay bây giờ!"
+  },
+  "footer": {
+    "description": "Một blog du lịch tối giản và đáng yêu chia sẻ những trải nghiệm và câu chuyện của một người du khách.",
+    "rightTexts": "Đã đăng ký bản quyền | Bản quyền",
+    "creatorText": "Được tạo với ❤️ bởi",
+    "currentlyText": "Hiện tại ở"
+  }
+}

@@ -2,16 +2,20 @@ import { getReadingTime, getRevalidateTime } from '@/lib/helpers';
 import { Post } from '@/types/collection';
 import { ArrowRight } from 'lucide-react';
 import clsx from 'clsx';
+import { getDictionary } from '@/lib/getDictionary';
 
 interface PostContentProps {
   post: Post;
   isPostPage?: boolean;
+  locale?: string;
 }
 
-export default function PostContent({
+export default async function PostContent({
   post,
   isPostPage = false,
+  locale = 'en',
 }: PostContentProps) {
+  const dictionary = await getDictionary(locale as 'en' | 'vi');
   return (
     <div className="space-y-2">
       <div
@@ -24,8 +28,12 @@ export default function PostContent({
       >
         <div
           className={clsx('font-medium ', {
-            'text-emerald-600': post.category.title === 'Cities',
-            'text-indigo-600': post.category.title === 'Experiences',
+            'text-emerald-600':
+              post.category.title === 'Cities' ||
+              post.category.title === 'Thành phố',
+            'text-indigo-600':
+              post.category.title === 'Experiences' ||
+              post.category.title === 'Trải nghiệm',
           })}
         >
           {' '}
@@ -34,9 +42,9 @@ export default function PostContent({
         <div className="w-2 h-2 rounded-full bg-neutral-200" />
         <div>{`${post.author.first_name} ${post.author.last_name}`}</div>
         <div className="w-2 h-2 rounded-full bg-neutral-200" />
-        <div>{getReadingTime(post.body)} </div>
+        <div>{getReadingTime(post.body, locale!)} </div>
         <div className="w-2 h-2 rounded-full bg-neutral-200" />
-        <div>{getRevalidateTime(post.date_created)} </div>
+        <div>{getRevalidateTime(post.date_created, locale!)} </div>
       </div>
       <h2
         className={clsx('@lg:text-3xl @md:text-2xl text-xl font-medium', {
@@ -50,7 +58,7 @@ export default function PostContent({
       </p>
       {!isPostPage && (
         <div className="flex items-center gap-2 pt-3">
-          Read more <ArrowRight size={14} />
+          {dictionary.button.readMore} <ArrowRight size={14} />
         </div>
       )}
     </div>

@@ -2,15 +2,17 @@ import Link from 'next/link';
 import React from 'react';
 import { PaddingContainer, SocialLink } from '..';
 import siteConfig from '@/config/site';
+import { getDictionary } from '@/lib/getDictionary';
 
-export default function Footer() {
+export default async function Footer({ locale }: { locale: string }) {
+  const dictionary = await getDictionary(locale || 'en');
   return (
     <div className="py-6 mt-10 border-t">
       <PaddingContainer>
         <div>
           <h2 className="text-3xl font-bold">{siteConfig.siteName}</h2>
           <p className="max-w-md mt-2 text-lg text-neutral-700">
-            {siteConfig.description}
+            {dictionary.footer.description}
           </p>
           {/* Social & Currently */}
           <div className="flex flex-wrap justify-between gap-4 mt-6 ">
@@ -36,7 +38,9 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="text-sm text-neutral-400">Currently at</div>
+              <div className="text-sm text-neutral-400">
+                {dictionary.footer.currentlyText}
+              </div>
               <div className="flex items-center gap-2 px-3 py-2 bg-white rounded-md shadow-md">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 " />
                 {siteConfig.currentlyAt}
@@ -46,11 +50,11 @@ export default function Footer() {
           {/* Bottom Section */}
           <div className="flex flex-wrap items-center justify-between gap-4 py-3 mt-16 border-t">
             <div className="text-sm text-neutral-400">
-              All right reserved | Copyright {new Date().getFullYear()}
+              {dictionary.footer.rightTexts} {new Date().getFullYear()}
             </div>
             <div className="text-sm">
               {' '}
-              Made with love by{' '}
+              {dictionary.footer.creatorText}{' '}
               <Link
                 href="https://twitter.com/Nhn24340777"
                 className="underline underline-offset-4"

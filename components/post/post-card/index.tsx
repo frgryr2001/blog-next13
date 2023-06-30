@@ -8,16 +8,18 @@ interface PostCardProps {
   post: Post;
   layout?: 'horizontal' | 'vertical';
   reverse?: boolean;
+  locale?: string;
 }
 
 export default function PostCard({
   post,
   layout = 'horizontal',
   reverse = false,
+  locale = 'en',
 }: PostCardProps) {
   return (
     <Link
-      href={`/post/${post.slug}`}
+      href={`/${locale}/post/${post.slug}`}
       className={clsx('@container', {
         'grid items-center grid-cols-1 md:grid-cols-2 gap-10':
           layout === 'horizontal',
@@ -38,7 +40,7 @@ export default function PostCard({
         alt={post.description}
       />
       {/* Content */}
-      <PostContent post={post} />
+      <PostContent post={post} locale={locale} />
     </Link>
   );
 }

@@ -8,3 +8,4 @@ export { default as PostList } from './post/post-list';
 export { default as CTACard } from './cta-card';
 export { default as PostHero } from './post/post-hero';
 export { default as PostBody } from './post/post-body';
+export { default as SwitchLang } from './navigation/switch-lang';

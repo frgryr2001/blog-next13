@@ -4,11 +4,12 @@ import Image from 'next/image';
 
 interface PostHeroProps {
   post: Post;
+  locale: string;
 }
-export default function PostHero({ post }: PostHeroProps) {
+export default function PostHero({ post, locale }: PostHeroProps) {
   return (
     <div>
-      <PostContent post={post} isPostPage />
+      <PostContent post={post} isPostPage locale={locale} />
       <Image
         src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/${post.image}?key=optimised`}
         width={1280}

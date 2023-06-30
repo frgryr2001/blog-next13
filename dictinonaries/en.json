@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "links": {
+      "cities": "Cities",
+      "experiences": "Experiences"
+    }
+  },
+  "button": {
+    "readMore": "Read More"
+  },
+  "ctaCard": {
+    "title": "Explore the world with me",
+    "description": "Explore the world with me ! I love to travel and explore new places 🌍. I'm travelling since 2023 and I have visited 5 countries so far 🔥.",
+    "button": "Sign Up",
+    "placeholder": "Write your email here",
+    "subscriberText1": "Join our",
+    "subscriberText2": "subscribers now!"
+  },
+  "footer": {
+    "description": "A minimal and lovely travel blog which shares experiences and stories of a traveler.",
+    "rightTexts": "All right reserved | Copyright",
+    "creatorText": "Created with ❤️ by",
+    "currentlyText": "Currently at"
+  }
+}

@@ -20,9 +20,19 @@ export const generateStaticParams = async () => {
     const postSlugs = posts?.data?.map((p) => {
       return {
         slug: p.slug as string,
+        lang: 'en',
       };
     });
-    return postSlugs ?? [];
+
+    const localisedPostSlugs = posts?.data?.map((p) => {
+      return {
+        slug: p.slug as string,
+        lang: 'vi',
+      };
+    });
+
+    const allPostSlugs = [...postSlugs!, ...localisedPostSlugs!];
+    return allPostSlugs ?? [];
   } catch (error) {
     console.log(error);
     throw new Error(" Can't get post data");
@@ -30,9 +40,9 @@ export const generateStaticParams = async () => {
 };
 
 export default async function Page({
-  params: { slug },
+  params: { slug, lang },
 }: {
-  params: { slug: string };
+  params: { slug: string; lang: string };
 }) {
   const getPostData = async (slug: string) => {
     try {
@@ -49,9 +59,26 @@ export default async function Page({
           'author.last_name',
           'category.id',
           'category.title',
+          'translations.*',
+          'category.translations.*',
         ],
       });
-      return post?.data?.[0];
+      const postObj = post?.data?.[0];
+      if (lang === 'en') {
+        return postObj;
+      } else {
+        const localisedPostData = {
+          ...postObj,
+          title: postObj?.translations[0]?.title,
+          description: postObj?.translations[0]?.description,
+          body: postObj?.translations[0]?.body,
+          category: {
+            ...postObj?.category,
+            title: postObj?.category?.translations[0]?.title,
+          },
+        };
+        return localisedPostData;
+      }
     } catch (error) {
       console.log(error);
       throw new Error("Can't get post data");
@@ -63,7 +90,7 @@ export default async function Page({
     <PaddingContainer>
       <div className="space-y-10">
         {/* Post Hero */}
-        <PostHero post={post} />
+        <PostHero locale={lang} post={post} />
         {/* Post body */}
         <div className="flex flex-col gap-10 mt-10 md:flex-row ">
           <div className="relative">
@@ -90,7 +117,7 @@ export default async function Page({
           <PostBody body={post.body} />
         </div>
         {/* CTA card */}
-        <CTACard />
+        <CTACard locale={lang} />
       </div>
     </PaddingContainer>
   );

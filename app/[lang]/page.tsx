@@ -1,9 +1,14 @@
 import { CTACard, PaddingContainer, PostCard, PostList } from '@/components';
-import { DUMMY_POSTS } from '@/data/DUMMY_DATA';
 import directus from '@/lib/directus';
 import { notFound } from 'next/navigation';
 
-export default async function Home() {
+export default async function Home({
+  params: { lang },
+}: {
+  params: {
+    lang: string;
+  };
+}) {
   const getAllPosts = async () => {
     try {
       const resp = await directus.items('post').readByQuery({
@@ -14,9 +19,27 @@ export default async function Home() {
           'author.last_name',
           'category.id',
           'category.title',
+          'category.translations.*',
+          'translations.*',
         ],
       });
-      return resp.data;
+      if (lang === 'en') {
+        return resp.data;
+      } else {
+        const localisedPost = resp.data?.map((post) => {
+          return {
+            ...post,
+            title: post.translations[0].title,
+            description: post.translations[0].description,
+            body: post.translations[0].body,
+            category: {
+              ...post.category,
+              title: post.category.translations[0].title,
+            },
+          };
+        });
+        return localisedPost;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -29,13 +52,15 @@ export default async function Home() {
   return (
     <PaddingContainer>
       <main className="h-auto space-y-10">
-        <PostCard post={posts[0]} />
+        <PostCard post={posts[0]} locale={lang} />
         <PostList
+          locale={lang}
           posts={posts.filter((item, index) => index > 0 && index < 3)}
         />
-        <CTACard />
-        <PostCard post={posts[3]} reverse />
+        <CTACard locale={lang} />
+        <PostCard post={posts[3]} reverse locale={lang} />
         <PostList
+          locale={lang}
           posts={posts.filter((item, index) => index > 3 && index < 6)}
         />
       </main>
